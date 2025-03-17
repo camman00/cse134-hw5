@@ -1,0 +1,72 @@
+@import url("index.css");
+
+header {
+  background-color: var(--audi-red, #d32f2f);
+  color: var(--white, #fff);
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+header nav ul li a {
+  color: var(--white, #fff);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+header h1 {
+  margin-top: 1rem;
+  font-size: 2rem;
+}
+
+
+main {
+  background-color: var(--white, #fff);
+  padding: 2rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+#post-header h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+#post-header p {
+  font-size: 1.1rem;
+  color: var(--gray, #666);
+}
+
+#post-content h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+#content-body p {
+  margin-bottom: 1rem;
+}
+
+blockquote {
+  margin: 1rem 2rem;
+  padding: 1rem;
+  background-color: #f4f4f4;
+  border-left: 5px solid var(--audi-red, #d32f2f);
+  font-style: italic;
+}
+
+code {
+  background-color: #eee;
+  padding: 0.2rem 0.4rem;
+  font-family: 'Courier New', monospace;
+}
+
+

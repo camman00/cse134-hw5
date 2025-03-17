@@ -6,58 +6,106 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog Post - My Portfolio</title>
   <link rel="stylesheet" href="styles.css">
-  <style>
-    body { margin: 0; border: 1px solid black; }
-    header, footer, nav, main, section { border: 1px solid black; }
-  </style>
 </head>
 <body>
-  <!-- Header with navigation -->
-  <header>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="blog-post.html">Blog Post</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+ <header id="site-header">
+    <nav class="navbar">
+      <div class="nav-left">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="index.html">Home</a></li>
+          <li class="nav-item"><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="nav-center">
+        <p class="nav-logo">Cameron Black</p>
+      </div>
+      <div class="nav-right">
+        <a href="contact.html" class="nav-link">Contact</a>
+        
+        <button id="theme-toggle" aria-label="Toggle Theme">🌞</button>
+      </div>
     </nav>
-    <h1>Blog Post</h1>
   </header>
-  
-  <!-- Main Blog Post Content -->
-  <main>
-    <section id="post-header">
-      <h2>Post Header</h2>
-      <p>Subtitle or publication details here.</p>
+<main>
+ <section id="post-header" class="post-header-section">
+      <h1 id="page-title">Blog Post</h1>
+      <h2 id="post-title">Post Header</h2>
+      <p id="post-subtitle">Subtitle or publication details here.</p>
     </section>
-    <section id="post-content">
-      <h2>Post Content</h2>
-      <p>This is the full content of the blog post. It contains in‐depth discussion and analysis.</p>
-      <blockquote cite="https://example.com">
-        <p>This blockquote highlights an important excerpt from a cited source.</p>
-        <cite>Example Source</cite>
-      </blockquote>
-      <p>Example of inline code: <code>&lt;span&gt;Hello&lt;/span&gt;</code></p>
-      <pre>
+<section id="post-content" class="post-content-section">
+      <h2 id="content-title">Post Content</h2>
+      <div id="content-body">
+        
+        <p>This is the full content of the blog post. It contains in‐depth discussion and analysis.</p>
+        <blockquote id="content-blockquote" cite="https://example.com">
+          <p>This blockquote highlights an important excerpt from a cited source.</p>
+          <cite>Example Source</cite>
+        </blockquote>
+        <p>Example of inline code: <code>&lt;span&gt;Hello&lt;/span&gt;</code></p>
+        <pre id="content-code">
 function example() {
   console.log("This is a code block.");
 }
-      </pre>
-      <hr>
-    </section>
-    <aside id="related-posts">
+        </pre>
+        <hr>
+      </div>
+    </section>    
+    <aside id="related-posts" class="related-posts-section">
       <h2>Related Posts</h2>
-      <ul>
-        <li><a href="blog-post.html">Related Post 1</a></li>
-        <li><a href="blog-post.html">Related Post 2</a></li>
+      <ul id="related-posts-list">
+        <li><a href="blog-post.html?id=related1">Related Post 1</a></li>
+        <li><a href="blog-post.html?id=related2">Related Post 2</a></li>
       </ul>
     </aside>
   </main>
-  
-  <!-- Footer -->
-  <footer>
+<footer id="site-footer" class="site-footer">
     <p>&copy; 2025 My Portfolio - Blog Post</p>
   </footer>
+
+ <script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+      const params = new URLSearchParams(window.location.search);
+      const postId = params.get('id');
+
+
+      if (!postId) {
+        console.error("No post id provided in query string. Using default content.");
+        return;
+      }
+
+
+      fetch('blog-posts.json')
+        .then(response => response.json())
+        .then(data => {
+    
+          const post = data.find(item => item.id === postId);
+          if (!post) {
+            console.error("Blog post not found for id:", postId);
+            return;
+          }
+    
+          document.getElementById('page-title').textContent = post.pageTitle || "Blog Post";
+          document.getElementById('post-title').textContent = post.title || "Post Header";
+          document.getElementById('post-subtitle').textContent = post.subtitle || "";
+          document.getElementById('content-title').textContent = post.contentTitle || "Post Content";
+          document.getElementById('content-body').innerHTML = post.contentHTML || "";
+          
+    
+          if (post.relatedPosts && Array.isArray(post.relatedPosts)) {
+            const relatedList = document.getElementById('related-posts-list');
+            relatedList.innerHTML = "";
+            post.relatedPosts.forEach(rp => {
+              const li = document.createElement('li');
+              li.innerHTML = `<a href="blog-post.html?id=${rp.id}">${rp.title}</a>`;
+              relatedList.appendChild(li);
+            });
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching blog post data:", error);
+        });
+    });
+  </script>
 </body>
 </html>
