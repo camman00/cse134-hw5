@@ -1,0 +1,386 @@
+/* --------------------------------------------------------------------------
+   FONT IMPORT
+   We're using Montserrat for headings (bold, geometric look)
+   and Open Sans for body (highly legible, modern).
+   -------------------------------------------------------------------------- */
+   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+
+   /* --------------------------------------------------------------------------
+      ROOT VARIABLES: COLORS, FONTS, SPACING, SIZES, etc.
+      -------------------------------------------------------------------------- */
+   :root {
+     /* Audi-Inspired Colors */
+     --audi-red: #C40233;
+     --audi-black: #0e0e0e;
+     --audi-white: #F7F7F7;
+     --audi-charcoal: #444444;
+   
+     /* Typography */
+     --font-heading: 'Montserrat', sans-serif;
+     --font-body: 'Open Sans', sans-serif;
+   
+     /* Font Sizes */
+     --fz-h1: 3rem;
+     --fz-h2: 2rem;
+     --fz-h3: 1.5rem;
+     --fz-body: 1rem;
+   
+     /* Line Heights */
+     --lh-heading: 1.2;
+     --lh-body: 1.6;
+   
+     /* Spacing Scale (rem-based) */
+     --space-xxs: 0.5rem;
+     --space-xs: 1rem;
+     --space-sm: 1.5rem;
+     --space-md: 2rem;
+     --space-lg: 3rem;
+     --space-xl: 4rem;
+   
+     /* Border & Shadow */
+     --border-thick: 3px;
+     --border-thin: 2px;
+     --navbar-shadow: 0px 11px 50px -1px rgba(0, 0, 0, 0.5);
+   }
+   
+   /* --------------------------------------------------------------------------
+      GLOBAL RESET & BASE
+      -------------------------------------------------------------------------- */
+   * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+   }
+   
+   body {
+     background-color: var(--audi-white);
+     color: var(--audi-charcoal);
+     font-family: var(--font-body);
+     font-size: var(--fz-body);
+     line-height: var(--lh-body);
+   }
+   
+   /* --------------------------------------------------------------------------
+      TYPOGRAPHY: HEADINGS & TEXT
+      -------------------------------------------------------------------------- */
+   h1, h2, h3, h4, h5, h6 {
+     font-family: var(--font-heading);
+     color: var(--audi-black);
+     margin-bottom: var(--space-xs);
+     line-height: var(--lh-heading);
+   }
+   
+   h1 {
+     font-weight: 700;
+     font-size: var(--fz-h1);
+   }
+   
+   h2 {
+     font-weight: 700;
+     font-size: var(--fz-h2);
+   }
+   
+   h3 {
+     font-weight: 700;
+     font-size: var(--fz-h3);
+   }
+   
+   p {
+     margin-bottom: var(--space-xs);
+     font-weight: 400;
+   }
+   
+   /* --------------------------------------------------------------------------
+      LINKS
+      -------------------------------------------------------------------------- */
+   a {
+     font-family: var(--font-body);
+     font-weight: 600;
+     text-decoration: none;
+     color: var(--audi-charcoal);
+     transition: color 0.3s ease, border-bottom 0.3s ease;
+     border-bottom: var(--border-thin) solid transparent;
+   }
+   
+   a:hover {
+     color: var(--audi-red);
+     border-bottom-color: var(--audi-red);
+   }
+   
+   /* --------------------------------------------------------------------------
+      HEADER & NAVIGATION
+      -------------------------------------------------------------------------- */
+   #site-header {
+     background-color: var(--audi-black);
+     box-shadow: var(--navbar-shadow);
+     z-index: 2;
+     position: relative;
+   }
+   
+   .navbar {
+     display: grid;
+     grid-template-columns: 1fr auto 1fr;
+     align-items: center;
+     padding: var(--space-sm) var(--space-md);
+     border-bottom: var(--border-thick) solid var(--audi-red);
+   }
+   
+   /* Left Section: Home & Blog */
+   .nav-left {
+     justify-self: start;
+   }
+   
+   .nav-list {
+     list-style: none;
+     display: flex;
+     gap: var(--space-sm);
+   }
+   
+   .nav-item a {
+     color: var(--audi-white);
+     text-transform: uppercase;
+     letter-spacing: 1px;
+     font-size: 0.9rem;
+   }
+   
+   /* Center Section: Cameron Black */
+   .nav-center {
+     justify-self: center;
+   }
+   
+   .nav-logo {
+     font-family: var(--font-heading);
+     color: var(--audi-white);
+     font-weight: 700;
+     font-size: 1.5rem;
+     letter-spacing: 2px;
+     text-transform: uppercase;
+   }
+   
+   /* Right Section: Contact */
+   .nav-right {
+     justify-self: end;
+   }
+   
+   .nav-link {
+     color: var(--audi-white);
+     text-transform: uppercase;
+     letter-spacing: 1px;
+     font-size: 0.9rem;
+   }
+   
+   /* --------------------------------------------------------------------------
+      WELCOME SECTION (FULL-WIDTH IMAGE)
+      -------------------------------------------------------------------------- */
+   .welcome-section {
+     position: relative;
+     text-align: center;
+     overflow: hidden;
+   }
+   
+   .welcome-figure {
+     margin: 0;
+     position: relative;
+   }
+   
+   .welcome-bg {
+     width: 100%;
+     height: auto;
+     display: block;
+     object-fit: cover;
+     object-position: center;
+   }
+   
+   .welcome-caption {
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+   }
+   
+   .welcome-title {
+     font-family: var(--font-heading);
+     font-weight: 700;
+     font-size: 2.5rem;
+     color: var(--audi-red);
+     line-height: var(--lh-heading);
+   }
+   
+   /* --------------------------------------------------------------------------
+      BLOG POSTS SECTION (2x2 LAYOUT)
+      -------------------------------------------------------------------------- */
+   .blog-posts-section {
+     padding: var(--space-md) var(--space-md);
+   }
+   
+   .blog-cards {
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     grid-gap: var(--space-sm);
+   }
+   
+   /* COOL GRADIENT BORDER for Blog Cards */
+   .blog-card {
+     background-color: var(--audi-black);
+     color: var(--audi-white);
+     padding: var(--space-sm);
+     text-align: center;
+     border: var(--border-thick) solid transparent;
+     border-image: linear-gradient(45deg, var(--audi-red), var(--audi-black));
+     border-image-slice: 1;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+   }
+   
+   .blog-card:hover {
+     cursor: pointer;
+   }
+   
+   .card-figure {
+     margin: 0;
+   }
+   
+   .card-img {
+     width: 100%;
+     height: auto;
+     display: block;
+     object-fit: cover;
+     object-position: center;
+     filter: grayscale(15%) sepia(35%) brightness(102%) saturate(91%) contrast(170%);
+   }
+   
+   .card-label {
+     margin-top: var(--space-xxs);
+     font-family: var(--font-body);
+     font-weight: 600;
+     font-size: 1.1rem;
+     text-transform: uppercase;
+     letter-spacing: 1px;
+   }
+   
+   /* Optionally flip Blog Card 4 thumbnail horizontally */
+   #blog4-thumbnail {
+     transform: scale(-1, 1);
+   }
+   
+   /* --------------------------------------------------------------------------
+      HERO SECTION (IMAGE LEFT & TEXT RIGHT) WITH LAYERED BORDER
+      -------------------------------------------------------------------------- */
+   .hero-section {
+     display: grid;
+     grid-template-columns: 2fr 2fr; /* Adjust ratio as needed (e.g., 1fr 3fr) */
+     gap: var(--space-sm);
+     padding: var(--space-md);
+     background-color: var(--audi-black);
+     color: var(--audi-white);
+     align-items: center;
+   }
+   
+   .hero-image-container {
+     position: relative;  /* Establishes positioning context */
+     width: 100%;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+   }
+   .hero-image-container > * {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+   }
+   
+   /* Decorative border image sits behind the hero image */
+   #border-hero {
+     left: 20%;    
+     position: absolute;
+     z-index: 1;
+     width: 60%;
+     height: 80%;
+     object-fit: cover;
+     object-position: center;
+   }
+   
+   /* Main hero image on top */
+   .hero-image {
+     position: relative;
+     z-index: 2;
+     width: 50%;
+     height: auto;
+     object-fit: cover;
+     object-position: center;
+   }
+   
+   .hero-text {
+     font-size: 1.1rem;
+     line-height: 1.5;
+     margin-left: var(--space-xs);
+   }
+   
+   /* --------------------------------------------------------------------------
+      FOOTER
+      -------------------------------------------------------------------------- */
+   .site-footer {
+     background-color: var(--audi-black);
+     color: var(--audi-white);
+     text-align: center;
+     padding: var(--space-sm);
+   }
+   
+   /* --------------------------------------------------------------------------
+      RESPONSIVE BREAKPOINTS
+      -------------------------------------------------------------------------- */
+   /* PHONES (up to 600px) */
+   @media (max-width: 600px) {
+     .navbar {
+       grid-template-columns: 1fr;
+       text-align: center;
+     }
+     .nav-left, .nav-center, .nav-right {
+       justify-self: center;
+       margin: var(--space-xxs) 0;
+     }
+     .nav-list {
+       flex-direction: row;
+       gap: var(--space-xs);
+     }
+     .welcome-title {
+       font-size: 1.8rem;
+     }
+     /* Stack blog cards in 1 column for narrow screens */
+     .blog-cards {
+       grid-template-columns: 1fr;
+     }
+     /* Hero layout: image on top, text below */
+     .hero-section {
+       grid-template-columns: 1fr;
+     }
+     .hero-text {
+       margin-left: 0;
+     }
+   }
+   
+   /* TABLETS (601px to 1024px) */
+   @media (min-width: 601px) and (max-width: 1024px) {
+     .nav-list {
+       gap: var(--space-sm);
+     }
+     .welcome-title {
+       font-size: 2rem;
+     }
+     .blog-cards {
+       grid-gap: var(--space-sm);
+     }
+   }
+   
+   /* DESKTOPS (1025px and above) */
+   @media (min-width: 1025px) {
+     .nav-list {
+       gap: var(--space-sm);
+     }
+     .welcome-title {
+       font-size: 2.5rem;
+     }
+   }
+   

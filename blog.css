@@ -1,0 +1,78 @@
+/* Import shared styles from index.css */
+@import url("index.css");
+
+/* BLOG PAGE SPECIFIC STYLES */
+
+/* Override .blog-cards grid to a single-column layout */
+.blog-cards {
+  grid-template-columns: 1fr;
+  grid-gap: var(--space-lg);
+  margin: var(--space-lg);
+}
+
+.blog-card {
+  border: none !important;
+}
+
+/* Add spacing between blog cards */
+.blog-card {
+  margin-bottom: var(--space-md);
+}
+
+/* Card content: ensure consistent padding for text sections */
+.card-content {
+  padding-top: var(--space-xs);
+}
+
+/* Adjust blog card header title size if needed */
+.blog-card header h3 {
+  margin-bottom: var(--space-xxs);
+  font-size: 1.4rem;
+}
+
+/* Extras section styling */
+.extras-blog-section {
+  padding: var(--space-md);
+  background-color: var(--audi-white);
+  color: var(--audi-charcoal);
+}
+
+.extras-blog-section details {
+  background-color: var(--audi-black);
+  color: var(--audi-white);
+  padding: var(--space-xs);
+  border: var(--border-thick) solid var(--audi-red);
+  margin-top: var(--space-sm);
+  border: none;
+}
+
+/* Centering project cards */
+project-card {
+  margin: 2rem 22%;
+}
+
+/* Button Styling */
+/* Center the buttons container */
+.data-buttons {
+  display: flex;
+  justify-content: center;
+  margin: var(--space-md) 0;
+}
+
+/* Style the buttons using audi red colors */
+.data-buttons button {
+  background-color: var(--audi-red);
+  color: var(--audi-white);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  margin: 0 0.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.data-buttons button:hover {
+  /* Adjust the hover color; if you have a darker red variable, use it here */
+  background-color: #b71c1c;
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - My Portfolio</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="theme-toggle.js"></script>
+</head>
+<body>
+  <!-- Header with Detailed Navigation -->
+  <header id="site-header">
+    <nav class="navbar">
+      <div class="nav-left">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="index.html">Home</a></li>
+          <li class="nav-item"><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="nav-center">
+        <p class="nav-logo">Cameron Black</p>
+      </div>
+      <div class="nav-right">
+        <a href="contact.html" class="nav-link">Contact</a>
+        <!-- Theme toggle button; hidden by default so it doesn't display when JS is off -->
+        <button id="theme-toggle" aria-label="Toggle Theme" style="display: none;">🌞</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Welcome Section -->
+  <section id="welcome" class="welcome-section">
+    <figure class="welcome-figure">
+      <picture>
+        <!-- Large screens -->
+        <source srcset="bgedit.webp" media="(min-width: 1024px)" type="image/webp">
+        <!-- Medium screens -->
+        <source srcset="bgedit.webp" media="(min-width: 601px) and (max-width: 1023px)" type="image/webp">
+        <!-- Small screens -->
+        <source srcset="bgedit.webp" media="(max-width: 600px)" type="image/jpeg">
+        <!-- Fallback -->
+        <img src="bg.webp" alt="Big background image showcasing mountain trails" class="welcome-bg" style="object-fit: cover; object-position: center;">
+      </picture>
+      <figcaption class="welcome-caption">
+        <!-- Optionally add a title or caption here -->
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- Hero Section with Image Left & Text Right -->
+  <section id="hero" class="hero-section">
+    <div class="hero-image-container">
+      <picture>
+        <!-- Decorative Border Image -->
+        <source srcset="border-hero.webp" media="(min-width:1024px)" type="image/webp">
+        <source srcset="border-hero-m.webp" media="(min-width:601px) and (max-width:1023px)" type="image/webp">
+        <source srcset="border-hero-s.jpg" media="(max-width:600px)" type="image/jpeg">
+        <img id="border-hero" src="border-hero.webp" alt="Decorative border" style="object-fit: cover; object-position: center;">
+      </picture>
+      <picture>
+        <!-- Main Hero Image -->
+        <source srcset="hero-left.jpg" media="(min-width:1024px)" type="image/jpeg">
+        <source srcset="hero-left-m.jpg" media="(min-width:601px) and (max-width:1023px)" type="image/jpeg">
+        <source srcset="hero-left-s.jpg" media="(max-width:600px)" type="image/jpeg">
+        <img src="hero-left.jpg" alt="Cameron riding a mountain bike along a scenic trail" class="hero-image" style="object-fit: cover; object-position: center;">
+      </picture>
+    </div>
+    <p class="hero-text">
+      Hello! I'm Cameron, a passionate coder and adventure enthusiast. I study Computer Science and Engineering at UCSD and love mountain biking, coding (JavaScript, TypeScript, C#, Python), exploring nature, working out, and surfing. Welcome to my digital playground where creativity meets technology!
+    </p>
+  </section>
+
+  <!-- Blog Posts Section (2x2) -->
+  <section id="blog-posts" class="blog-posts-section">
+    <div class="blog-cards">
+      <!-- Blog Card 1 -->
+      <article class="blog-card">
+        <figure class="card-figure">
+          <picture>
+            <source srcset="blog1.webp" media="(min-width:1024px)" type="image/webp">
+            <source srcset="blog1-m.webp" media="(min-width:601px) and (max-width:1023px)" type="image/webp">
+            <source srcset="blog1-s.jpg" media="(max-width:600px)" type="image/jpeg">
+            <img src="blog1.webp" alt="Cover image for blog post about Quantum Tensors" class="card-img" style="object-fit: cover; object-position: center;">
+          </picture>
+          <figcaption class="card-label">The Engine of Quantum Tensors</figcaption>
+        </figure>
+      </article>
+      <!-- Blog Card 2 -->
+      <article class="blog-card">
+        <figure class="card-figure">
+          <picture>
+            <source srcset="blog2.webp" media="(min-width:1024px)" type="image/webp">
+            <source srcset="blog2-m.webp" media="(min-width:601px) and (max-width:1023px)" type="image/webp">
+            <source srcset="blog2-s.jpg" media="(max-width:600px)" type="image/jpeg">
+            <img src="blog2.webp" alt="Cover image for blog post on Azure Container Apps x Shopify" class="card-img" style="object-fit: cover; object-position: center;">
+          </picture>
+          <figcaption class="card-label">Azure Container Apps x Shopify</figcaption>
+        </figure>
+      </article>
+      <!-- Blog Card 3 -->
+      <article class="blog-card">
+        <figure class="card-figure">
+          <picture>
+            <source srcset="blog3.webp" media="(min-width:1024px)" type="image/webp">
+            <source srcset="blog3-m.webp" media="(min-width:601px) and (max-width:1023px)" type="image/webp">
+            <source srcset="blog3-s.jpg" media="(max-width:600px)" type="image/jpeg">
+            <img src="blog3.webp" alt="Cover image for blog post on Technology Trends within Retail" class="card-img" style="object-fit: cover; object-position: center;">
+          </picture>
+          <figcaption class="card-label">Technology Trends within Retail</figcaption>
+        </figure>
+      </article>
+      <!-- Blog Card 4 -->
+      <article class="blog-card">
+        <figure class="card-figure">
+          <picture>
+            <source srcset="blog4.webp" media="(min-width:1024px)" type="image/webp">
+            <source srcset="blog4-m.webp" media="(min-width:601px) and (max-width:1023px)" type="image/webp">
+            <source srcset="blog4-s.jpg" media="(max-width:600px)" type="image/jpeg">
+            <img src="blog4.webp" id="blog4-thumbnail" alt="Cover image for blog post on Artificial Computing Paradox" class="card-img" style="object-fit: cover; object-position: center; transform: scale(-1, 1);">
+          </picture>
+          <figcaption class="card-label">Fundamental Paradox: Artificial Computing</figcaption>
+        </figure>
+      </article>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="site-footer" class="site-footer">
+    <p>&copy; 2025 My Portfolio</p>
+  </footer>
+</body>
+</html>

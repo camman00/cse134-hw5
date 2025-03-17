@@ -1,0 +1,118 @@
+/* --------------------------------------------------------------------------
+   Import shared styles from index.css
+   -------------------------------------------------------------------------- */
+   @import url("index.css");
+
+   /* --------------------------------------------------------------------------
+      CONTACT PAGE SPECIFIC STYLES
+      -------------------------------------------------------------------------- */
+   
+   /* Center the main content with a maximum width */
+   .contact-info-section,
+   .contact-form-section {
+     padding: var(--space-md);
+     max-width: 800px;
+     margin: 0 auto;
+   }
+   
+   /* Headings for contact sections */
+   .contact-info-section h2,
+   .contact-form-section h2 {
+     margin-bottom: var(--space-xs);
+   }
+   
+   /* Form Layout */
+   form {
+     display: flex;
+     flex-direction: column;
+     gap: var(--space-sm);
+   }
+   
+   fieldset {
+     border: var(--border-thick) solid var(--audi-red);
+     padding: var(--space-md);
+   }
+   
+   legend {
+     font-family: var(--font-heading);
+     font-weight: 700;
+     color: var(--audi-red);
+     margin-bottom: var(--space-xs);
+   }
+   
+   .form-group {
+     display: flex;
+     flex-direction: column;
+     gap: var(--space-xxs);
+   }
+   
+   label {
+     font-weight: 600;
+   }
+   
+   input[type="text"],
+   input[type="email"],
+   textarea,
+   select {
+     padding: var(--space-xs);
+     border: var(--border-thin) solid var(--audi-charcoal);
+     border-radius: 0; /* Keeping it minimal */
+     font-size: var(--fz-body);
+     font-family: var(--font-body);
+   }
+   
+   /* --------------------------------------------------------------------------
+      VALIDATION & FEEDBACK STYLING
+      -------------------------------------------------------------------------- */
+   
+   /* Visually indicate required fields */
+   input[required],
+   textarea[required] {
+     background-color: #f9f9f9;
+   }
+   
+   /* Apply a green border for valid fields */
+   input:valid,
+   textarea:valid {
+     border-color: green;
+   }
+   
+   /* Apply a red border for invalid fields once user has interacted (excluding placeholder-only state) */
+   input:invalid:not(:placeholder-shown),
+   textarea:invalid:not(:placeholder-shown) {
+     border-color: red;
+   }
+   
+   /* --------------------------------------------------------------------------
+      SUBMIT BUTTON & FOOTER STYLING
+      -------------------------------------------------------------------------- */
+   
+   /* Submit Button Styling */
+   button[type="submit"] {
+     padding: var(--space-xs) var(--space-sm);
+     background-color: var(--audi-red);
+     color: var(--audi-white);
+     border: none;
+     font-family: var(--font-body);
+     font-weight: 600;
+     text-transform: uppercase;
+     cursor: pointer;
+     transition: background-color 0.3s ease;
+   }
+   
+   button[type="submit"]:hover {
+     background-color: var(--audi-black);
+   }
+   
+   /* Footer Adjustments */
+   .site-footer {
+     text-align: center;
+     padding: var(--space-sm);
+   }
+   
+   .site-footer address {
+     margin-bottom: var(--space-xs);
+     font-style: normal;
+     font-weight: 600;
+   }
+   

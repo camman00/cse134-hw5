@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Blog - My Portfolio">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog - My Portfolio</title>
+  <link rel="stylesheet" href="blog.css">
+  <!-- Theme toggle script -->
+  <script src="theme-toggle.js"></script>
+  <!-- Custom element & functionality script -->
+  <script defer src="project-card.js"></script>
+</head>
+<body>
+  <!-- Header with Detailed Navigation -->
+  <header id="site-header">
+    <nav class="navbar">
+      <div class="nav-left">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="index.html">Home</a></li>
+          <li class="nav-item"><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="nav-center">
+        <p class="nav-logo">Cameron Black</p>
+      </div>
+      <div class="nav-right">
+        <a href="contact.html" class="nav-link">Contact</a>
+        <!-- Theme toggle button; hidden by default so it doesn't display when JS is off -->
+        <button id="theme-toggle" aria-label="Toggle Theme" style="display: none;">🌞</button>
+      </div>
+    </nav>
+  </header>
+  
+  <!-- Main Blog Listing -->
+  <main>
+    <section id="blog-list" class="blog-list-section">
+      
+      <!-- Data Loader Buttons -->
+      <div class="data-buttons">
+        <button id="load-local">Load Local</button>
+        <button id="load-remote">Load Remote</button>
+      </div>
+
+      <!-- Container for dynamically created project cards -->
+      <div class="blog-cards">
+        <!-- The blog cards will be dynamically created here by project-card.js -->
+      </div>
+    </section>
+    
+    <section id="extras-blog" class="extras-blog-section">
+      <div class="extras-content">
+        <details>
+          <summary>More Blog Info</summary>
+          <p>Additional details about the blog.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <footer id="site-footer" class="site-footer">
+    <p>&copy; 2025 My Portfolio - Blog</p>
+  </footer>
+</body>
+</html>

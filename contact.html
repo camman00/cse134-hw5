@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Contact - My Portfolio">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - My Portfolio</title>
+  <link rel="stylesheet" href="contact.css">
+  <script src="theme-toggle.js"></script>
+  <style>
+    /* Additional styles for robust error messages and flashing effects */
+    .error-message {
+      color: red;
+      background: #fff5f5;
+      border: 1px solid red;
+      padding: 0.5em;
+      margin-bottom: 0.5em;
+      cursor: pointer;
+      opacity: 1;
+      transition: opacity 1s ease;
+    }
+    .flash {
+      animation: flash 0.5s;
+    }
+    @keyframes flash {
+      0% { background-color: yellow; }
+      100% { background-color: inherit; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with Navigation -->
+  <header id="site-header">
+    <nav class="navbar">
+      <div class="nav-left">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="index.html">Home</a></li>
+          <li class="nav-item"><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="nav-center">
+        <p class="nav-logo">Cameron Black</p>
+      </div>
+      <div class="nav-right">
+        <a href="contact.html" class="nav-link">Contact</a>
+        <!-- Theme toggle button; hidden by default so it doesn't display when JS is off -->
+        <button id="theme-toggle" aria-label="Toggle Theme" style="display: none;">🌞</button>
+      </div>
+    </nav>
+    <h1>Contact</h1>
+  </header>
+  
+  
+  <!-- Main Contact Content -->
+  <main>
+    <section id="contact-info" class="contact-info-section">
+      <h2>Contact Information</h2>
+      <p>You can email me at <a href="mailto:email@example.com">email@example.com</a>.</p>
+    </section>
+    <section id="contact-form" class="contact-form-section">
+      <h2>Contact Form</h2>
+      <!-- NoScript fallback message -->
+      <noscript>
+        <div class="noscript-message">
+          <p>Enhanced form features are not available because JavaScript is disabled. Please contact us via <a href="mailto:email@example.com">email</a>.</p>
+        </div>
+      </noscript>
+      <!-- Dedicated error message area -->
+      <div id="error-messages"></div>
+      <form action="https://httpbin.org/post" method="post" novalidate>
+        <fieldset>
+          <legend>Contact Details</legend>
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <!-- Pattern restricts to letters and spaces -->
+            <input type="text" id="name" name="name" required pattern="[A-Za-z\s]+" title="Name must contain only letters and spaces.">
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <!-- Using type="email" for built-in email validation -->
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="comments">Comments:</label>
+            <textarea id="comments" name="comments" rows="4" cols="50" required minlength="10" maxlength="500"></textarea>
+            <!-- Character countdown display -->
+            <span id="char-count">500 characters remaining</span>
+          </div>
+          <!-- Hidden field for bot detection -->
+          <input type="hidden" name="possible_bot" value="true">
+          <!-- Hidden field to capture form errors -->
+          <input type="hidden" id="form-errors" name="form-errors" value="">
+          <div class="form-group">
+            <button type="submit">Submit</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <footer id="site-footer" class="site-footer">
+    <address>Gilman Drive</address>
+    <p>&copy; 2025 My Portfolio - Contact</p>
+    <noscript>
+      <p>JavaScript is disabled. Some features may not work.</p>
+    </noscript>
+  </footer>
+  
+  <script>
+    // Wait until the DOM content is loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      const nameField = document.getElementById("name");
+      const emailField = document.getElementById("email");
+      const commentsField = document.getElementById("comments");
+      const errorMessagesDiv = document.getElementById("error-messages");
+      const charCountDisplay = document.getElementById("char-count");
+      const form = document.querySelector("form");
+      const maxChars = parseInt(commentsField.getAttribute("maxlength")) || 500;
+      let form_errors = [];
+
+      // Helper function to check for duplicate error messages by field and text
+      function errorExists(fieldName, message) {
+        return form_errors.some(err => err.field === fieldName && err.error === message);
+      }
+
+      // Helper function to display error messages robustly.
+      function showErrorMessage(fieldName, message) {
+        // Prevent duplicate error messages for the same field
+        if (errorExists(fieldName, message)) return;
+
+        const msgEl = document.createElement("div");
+        msgEl.className = "error-message flash";
+        msgEl.textContent = message;
+        msgEl.dataset.field = fieldName;
+        // When clicked, focus the corresponding field.
+        msgEl.addEventListener("click", function() {
+          const target = document.getElementById(fieldName);
+          if (target) target.focus();
+        });
+        errorMessagesDiv.appendChild(msgEl);
+
+        // Record the error in the form_errors array
+        form_errors.push({ field: fieldName, error: message });
+
+        // Fade out and remove the error message after 5 seconds
+        setTimeout(() => {
+          msgEl.style.opacity = "0";
+          setTimeout(() => {
+            if (msgEl.parentNode === errorMessagesDiv) {
+              errorMessagesDiv.removeChild(msgEl);
+            }
+          }, 1000);
+        }, 5000);
+      }
+
+      // Remove any error messages associated with a given field
+      function clearFieldErrors(fieldName) {
+        // Filter out errors for this field from form_errors array
+        form_errors = form_errors.filter(err => err.field !== fieldName);
+        // Remove corresponding error message elements from the error area
+        const messages = errorMessagesDiv.querySelectorAll(`[data-field="${fieldName}"]`);
+        messages.forEach(msgEl => {
+          msgEl.style.opacity = "0";
+          setTimeout(() => {
+            if (msgEl.parentNode === errorMessagesDiv) {
+              errorMessagesDiv.removeChild(msgEl);
+            }
+          }, 1000);
+        });
+      }
+
+      // Masking mechanism for the name field to block disallowed characters
+      nameField.addEventListener("input", function() {
+        let currentValue = nameField.value;
+        const validRegex = /^[A-Za-z\s]*$/;
+        if (!validRegex.test(currentValue)) {
+          // Identify illegal characters
+          const illegalChars = currentValue.match(/[^A-Za-z\s]/g);
+          const cleanedValue = currentValue.replace(/[^A-Za-z\s]/g, '');
+          nameField.value = cleanedValue;
+          if (illegalChars && illegalChars.length > 0) {
+            const illegalStr = illegalChars.join(", ");
+            showErrorMessage("name", "Illegal character(s) removed: " + illegalStr);
+            // Flash the field to visually indicate an error
+            nameField.classList.add("flash");
+            setTimeout(() => {
+              nameField.classList.remove("flash");
+            }, 500);
+          }
+        } else {
+          // If the field becomes valid, clear its errors
+          clearFieldErrors("name");
+        }
+      });
+
+      // Email field validation
+      emailField.addEventListener("input", function() {
+        // Clear error messages if the email becomes valid
+        if (emailField.checkValidity()) {
+          clearFieldErrors("email");
+        }
+      });
+      emailField.addEventListener("blur", function() {
+        if (!emailField.checkValidity()) {
+          showErrorMessage("email", "Please enter a valid email address.");
+        } else {
+          clearFieldErrors("email");
+        }
+      });
+
+      // Countdown for allowed characters in the comments textarea
+      commentsField.addEventListener("input", function() {
+        const remaining = maxChars - commentsField.value.length;
+        charCountDisplay.textContent = remaining + " characters remaining";
+        if (remaining <= 50) {
+          charCountDisplay.style.color = "red";
+        } else {
+          charCountDisplay.style.color = "";
+        }
+        if (remaining < 0) {
+          showErrorMessage("comments", "Exceeded maximum character limit in comments.");
+        } else {
+          // Clear any previous character limit error if user corrects input
+          clearFieldErrors("comments");
+        }
+      });
+
+      // Validate the form on submission and capture errors
+      form.addEventListener("submit", function(event) {
+        // Clear previous custom messages
+        nameField.setCustomValidity("");
+        emailField.setCustomValidity("");
+        commentsField.setCustomValidity("");
+
+        let submissionError = false;
+
+        // Check each field using the Constraint Validation API
+        if (!nameField.checkValidity()) {
+          nameField.setCustomValidity("Name must only contain letters and spaces.");
+          showErrorMessage("name", "Name must only contain letters and spaces.");
+          submissionError = true;
+        }
+        if (!emailField.checkValidity()) {
+          emailField.setCustomValidity("Please enter a valid email address.");
+          showErrorMessage("email", "Please enter a valid email address.");
+          submissionError = true;
+        }
+        if (!commentsField.checkValidity()) {
+          const min = commentsField.getAttribute("minlength");
+          const max = commentsField.getAttribute("maxlength");
+          commentsField.setCustomValidity(`Comments must be between ${min} and ${max} characters.`);
+          showErrorMessage("comments", `Comments must be between ${min} and ${max} characters.`);
+          submissionError = true;
+        }
+        // Prevent submission if there are errors
+        if (submissionError || !form.checkValidity()) {
+          event.preventDefault();
+          showErrorMessage("form", "Form submission prevented due to errors. Please fix them.");
+        }
+        // Encode the error data into the hidden field for server-side processing
+        document.getElementById("form-errors").value = JSON.stringify(form_errors);
+      });
+    });
+  </script>
+</body>
+</html>
