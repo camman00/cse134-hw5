@@ -1,17 +1,13 @@
-name: Deploy to Remote via rsync (password)
+name: Deploy to Remote via rsync
 
 on:
   push:
-    branches: [ main ]   # change if you deploy from another branch
+    branches: [ main ]   # change if your default branch is different
+  workflow_dispatch:      # allow manual runs
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-      REMOTE_USER: ${{ secrets.REMOTE_USER }}
-      REMOTE_PASSWORD: ${{ secrets.REMOTE_PASSWORD }}
-      REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
-      SSH_PORT: ${{ secrets.SSH_PORT }} # optional; default 22 if unset
 
     steps:
       - name: Check out repo
@@ -19,36 +15,39 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install sshpass
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y sshpass
+      # Load your private key from GitHub Secrets
+      - name: Start ssh-agent and add key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # If your key has a passphrase, also set SSH_PASSPHRASE secret and uncomment:
+          # ssh-passphrase: ${{ secrets.SSH_PASSPHRASE }}
 
-      - name: (Optional) Add server to known_hosts
+      # Trust the remote host (avoids interactive prompt)
+      - name: Add server to known_hosts
+        env:
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -p "${SSH_PORT:-22}" -H "$REMOTE_HOST" >> ~/.ssh/known_hosts || true
+          ssh-keyscan -H "$REMOTE_HOST" >> ~/.ssh/known_hosts
 
-      - name: Ensure target directory exists
+      # Ensure target directory exists
+      - name: Create target directory (if needed)
+        env:
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
         run: |
-          SSHPASS="$REMOTE_PASSWORD" sshpass -e ssh \
-            -p "${SSH_PORT:-22}" \
-            -o StrictHostKeyChecking=no \
-            "$REMOTE_USER@$REMOTE_HOST" "mkdir -p '$REMOTE_PATH'"
+          ssh "$REMOTE_USER@$REMOTE_HOST" "mkdir -p '$REMOTE_PATH'"
 
-      - name: Rsync to remote (respect .gitignore)
+      # Sync files, respecting .gitignore
+      - name: Rsync to remote
+        env:
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
         run: |
-          SSHPASS="$REMOTE_PASSWORD" sshpass -e rsync -az --delete \
+          rsync -az --delete \
             --filter=':- .gitignore' \
             --exclude='.git/' \
-            -e "ssh -p ${SSH_PORT:-22} -o StrictHostKeyChecking=no" \
             ./ "$REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH/"
-
-      # If your remote rsync is too old for the .gitignore filter, use this instead:
-      # - name: Rsync (fallback via git ls-files)
-      #   run: |
-      #     git ls-files -z --cached --others --exclude-standard \
-      #       | SSHPASS="$REMOTE_PASSWORD" sshpass -e rsync -az --delete \
-      #         --files-from=- --from0 \
-      #         -e "ssh -p ${SSH_PORT:-22} -o StrictHostKeyChecking=no" \
-      #         ./ "$REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH/"
